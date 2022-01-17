@@ -1,0 +1,29 @@
+<input 
+    type="text" 
+    class="form-control"
+    [(ngModel)]="model" 
+    (selectItem)="selectedItem($event)" 
+    [ngbTypeahead]="search"
+    (focus)="focus$.next($any($event).target.value)"
+    (click)="click$.next($any($event).target.value)"
+    #instance="ngbTypeahead"
+    (enter)="search"
+    [resultFormatter]="formatter"
+    />
+<hr>
+<pre>Model: {{ model | json }}</pre>
+clicked item {{clickedItem}}
+
+<table>
+    <tr>
+        <th>firstname</th>
+        <th>lastname</th>
+        <th>id</th>
+    </tr>
+    <tr *ngFor="let j of resultSet">
+        <td>{{j.firstName}}</td>
+        <td>{{j.lastName}}</td>
+        <td>{{j.id}}</td>
+    </tr>
+
+</table>
