@@ -35,8 +35,8 @@ export class NgbdTypeaheadFormatComponent implements OnInit {
   clickedItem:string = '';
   patientsFullNames : string[] = [];
   allPatientsDetails : Patient[] = [];
-  resultSet : any;
-  historySearch : string[] = [];
+  resultSet : Patient[] = [];
+  historySearch : Patient[] = [];
 
   formatter = (result: string) => result.toUpperCase();
 
@@ -62,9 +62,10 @@ export class NgbdTypeaheadFormatComponent implements OnInit {
         if(term === ''){
           return this.patientsFullNames
         } else {
-          this.resultSet = this.allPatientsDetails.filter(ele => ele['fullName'].includes(term))
-          this.historySearch.push({...this.resultSet,'term': term});
-          return this.patientsFullNames.filter(ele => ele.includes(term))
+          this.resultSet = this.allPatientsDetails.filter(v => v.fullName.toLowerCase().indexOf(term.toLowerCase()) > -1).slice(0, 10);
+          this.historySearch.push(...this.resultSet);
+          //return this.patientsFullNames.filter(ele => ele.includes(term))
+          return this.resultSet.map(ele => ele.fullName);
         }
       }));
   }
